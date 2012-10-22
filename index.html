@@ -7,35 +7,35 @@
 		var iosocket = io.connect();
 
 			iosocket.on('connect', function () {
-				iosocket.emit('set nickname', prompt('What is your nickname?'));
-				jQuery('#incomingChatMessages').append(jQuery('<li>Connected</li>'));
+				iosocket.emit('set nickname', prompt('Qual seu nome?'));
+				jQuery('#ChatMessages').append(jQuery('<li>Conectado</li>'));
 
 				iosocket.on('message', function(message) {
-					jQuery('#incomingChatMessages').append(jQuery('<li></li>').text(message));
+					jQuery('#ChatMessages').append(jQuery('<li></li>').text(message));
 				});
 				iosocket.on('disconnect', function() {
-					jQuery('#incomingChatMessages').append('<li>Disconnected</li>');
+					jQuery('#ChatMessages').append('<li>Desconectado</li>');
 				});
 			});
  
-			jQuery('#outgoingChatMessage').keypress(function(event) {
+			jQuery('#SendMessage').keypress(function(event) {
 				if(event.which == 13) {
 					event.preventDefault();
-					iosocket.send(jQuery('#outgoingChatMessage').val());
+					iosocket.send(jQuery('#SendMessage').val());
+					jQuery('#ChatMessages').append(jQuery('<li></li>').text('Voce falou: ' + jQuery('#SendMessage').val()));
+					jQuery('#SendMessage').val('');
 
-					iosocket.get('nickname', function (err, name) {
+					/*iosocket.get('nickname', function (err, name) {
 						alert(name);
-					});
-
-					jQuery('#incomingChatMessages').append(jQuery('<li></li>').text('You say: ' + jQuery('#outgoingChatMessage').val()));
-					jQuery('#outgoingChatMessage').val('');
+					});*/
+					
 				}
 			});
 		});
 	</script>
 </head>
 <body>
-Incoming Chat:&nbsp;<ul id="incomingChatMessages"></ul>
-<input type="text" id="outgoingChatMessage">
+Incoming Chat:&nbsp;<ul id="ChatMessages"></ul>
+<input type="text" id="SendMessage">
 </body>
 </html>

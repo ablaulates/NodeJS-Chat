@@ -18,7 +18,7 @@ socketio.listen(server).on('connection', function (socket) {
 
 	socket.on('message', function (msg) {
 		socket.get('nickname', function (err, name) {
-			var message = name + ' say: ' + msg;
+			var message = name + ' diz: ' + msg;
 			socket.broadcast.emit('message', message);
 		});
 	});
