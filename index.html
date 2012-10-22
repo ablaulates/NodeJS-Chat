@@ -1,0 +1,41 @@
+<html>
+<head>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		jQuery(function(){
+		var iosocket = io.connect();
+
+			iosocket.on('connect', function () {
+				iosocket.emit('set nickname', prompt('What is your nickname?'));
+				jQuery('#incomingChatMessages').append(jQuery('<li>Connected</li>'));
+
+				iosocket.on('message', function(message) {
+					jQuery('#incomingChatMessages').append(jQuery('<li></li>').text(message));
+				});
+				iosocket.on('disconnect', function() {
+					jQuery('#incomingChatMessages').append('<li>Disconnected</li>');
+				});
+			});
+ 
+			jQuery('#outgoingChatMessage').keypress(function(event) {
+				if(event.which == 13) {
+					event.preventDefault();
+					iosocket.send(jQuery('#outgoingChatMessage').val());
+
+					iosocket.get('nickname', function (err, name) {
+						alert(name);
+					});
+
+					jQuery('#incomingChatMessages').append(jQuery('<li></li>').text('You say: ' + jQuery('#outgoingChatMessage').val()));
+					jQuery('#outgoingChatMessage').val('');
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+Incoming Chat:&nbsp;<ul id="incomingChatMessages"></ul>
+<input type="text" id="outgoingChatMessage">
+</body>
+</html>
