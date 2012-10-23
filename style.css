@@ -1,0 +1,50 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+.dnone {
+	display: none;
+}
+
+.loginbox {
+	width: 200px;
+	height: 35px;
+	margin: 30px auto;
+	padding: 20px;
+	background-color: #ccc;
+	border-radius: 5px;
+}
+
+.loginbox input {
+	height: 30px;
+	width: 200px;
+	padding: 0 10px;
+	border: 1px solid #aaa;
+}
+
+#chat {
+	width: 400px;
+	margin: 0 auto;
+	min-height: 800px;
+	background-color: #ccc;	
+}
+
+#chat ul {
+	list-style: none;
+}
+
+#chat li {
+	background-color: #ddd;
+}
+
+#chat input {
+	height: 30px;
+	width: 380px;
+	padding: 0 10px;
+	border: 1px solid #aaa;
+}

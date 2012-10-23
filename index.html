@@ -1,41 +1,65 @@
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="http://localhost/node/style.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		jQuery(function(){
-		var iosocket = io.connect();
 
-			iosocket.on('connect', function () {
-				iosocket.emit('set nickname', prompt('Qual seu nome?'));
-				jQuery('#ChatMessages').append(jQuery('<li>Conectado</li>'));
-
-				iosocket.on('message', function(message) {
-					jQuery('#ChatMessages').append(jQuery('<li></li>').text(message));
-				});
-				iosocket.on('disconnect', function() {
-					jQuery('#ChatMessages').append('<li>Desconectado</li>');
-				});
+			jQuery('#formlogin').on('submit', function(e) {
+				e.preventDefault();
+				var name = jQuery('#login').val();
+				startChat(name);
 			});
- 
-			jQuery('#SendMessage').keypress(function(event) {
-				if(event.which == 13) {
-					event.preventDefault();
-					iosocket.send(jQuery('#SendMessage').val());
-					jQuery('#ChatMessages').append(jQuery('<li></li>').text('Voce falou: ' + jQuery('#SendMessage').val()));
-					jQuery('#SendMessage').val('');
 
-					/*iosocket.get('nickname', function (err, name) {
-						alert(name);
-					});*/
+			function startChat(name){
+				var iosocket = io.connect();
+				iosocket.on('connect', function () {
+					iosocket.emit('set nickname', name);
 					
-				}
-			});
+					jQuery('.loginbox').remove();
+					jQuery('#chat').removeClass('dnone');
+					//conectado
+
+					iosocket.on('message', function(message) {
+						jQuery('#ChatMessages').append(jQuery('<li></li>').text(message));
+					});
+
+					iosocket.on('disconnect', function() {
+						jQuery('#chat').remove();
+						jQuery('#wrapper').append('<div class="loginbox"><input id="login" type="text" placeholder="Digite seu nome" /></div>');
+					});
+				});
+
+				jQuery('#SendMessage').keypress(function(event) {
+					if(event.which == 13) {
+						event.preventDefault();
+						iosocket.send(jQuery('#SendMessage').val());
+						jQuery('#ChatMessages').append(jQuery('<li></li>').text('Voce falou: ' + jQuery('#SendMessage').val()));
+						jQuery('#SendMessage').val('');
+
+						iosocket.get('nickname', function (err, name) {
+							alert(name);
+						});
+					}
+				});
+			}
 		});
 	</script>
 </head>
 <body>
-Incoming Chat:&nbsp;<ul id="ChatMessages"></ul>
-<input type="text" id="SendMessage">
+	<div id="wrapper">
+		<div class="loginbox">
+			<form id="formlogin">
+				<input id="login" type="text" placeholder="Digite seu nome" />
+				<input type="submit"/>
+			</form>
+		</div>
+
+		<div id="chat" class="dnone">
+			<ul id="ChatMessages"></ul>
+			<input type="text" id="SendMessage" placeholder="enviar" />
+		</div>
+	</div>
 </body>
 </html>
