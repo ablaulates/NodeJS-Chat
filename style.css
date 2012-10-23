@@ -5,6 +5,7 @@
 
 body {
 	font-family: Helvetica, Arial, sans-serif;
+	color: #555;
 }
 
 .dnone {
@@ -27,11 +28,15 @@ body {
 	border: 1px solid #aaa;
 }
 
+.loginbox #submit {
+	display: none;
+}
+
 #chat {
 	width: 400px;
 	margin: 0 auto;
-	min-height: 800px;
 	background-color: #ccc;	
+	font-size: 14px;
 }
 
 #chat ul {
@@ -39,7 +44,9 @@ body {
 }
 
 #chat li {
+	padding: 10px;
 	background-color: #ddd;
+	margin: 1px;
 }
 
 #chat input {
@@ -47,4 +54,5 @@ body {
 	width: 380px;
 	padding: 0 10px;
 	border: 1px solid #aaa;
+	margin: 10px;
 }
