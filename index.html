@@ -1,47 +1,47 @@
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="http://localhost/node/style.css">
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script src="/socket.io/socket.io.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="http://localhost:4000/socket.io/socket.io.js"></script>
 	<script>
 		jQuery(function(){
-
-			jQuery('#formlogin').on('submit', function(e) {
+			var form = document.getElementById("formlogin");
+			form.addEventListener('submit', function(e) {
 				e.preventDefault();
 				var name = jQuery('#login').val();
 				startChat(name);
 			});
 
 			function startChat(name){
-				var iosocket = io.connect();
+				var iosocket = io.connect(":4000");
+
 				iosocket.on('connect', function () {
-					iosocket.emit('set nickname', name);
-					
+					var user = {
+						user_id: 1,
+						user_name: name 
+					}; 
+					iosocket.emit('set user', user);
+
 					jQuery('.loginbox').remove();
 					jQuery('#chat').removeClass('dnone');
 					//conectado
 
-					iosocket.on('message', function(message) {
-						jQuery('#ChatMessages').append(jQuery('<li></li>').text(message));
+					iosocket.on('message', function(msg) {
+						jQuery('#ChatMessages').append(jQuery('<li></li>').text(msg.sender_name + " diz: " + msg.message));
 					});
 
 					iosocket.on('disconnect', function() {
 						jQuery('#chat').remove();
 						jQuery('#wrapper').append('<div class="loginbox"><input id="login" type="text" placeholder="Digite seu nome" /></div>');
 					});
-				});
 
-				jQuery('#SendMessage').keypress(function(event) {
-					if(event.which == 13) {
-						event.preventDefault();
-						iosocket.send(jQuery('#SendMessage').val());
-						jQuery('#ChatMessages').append(jQuery('<li></li>').text('Voce falou: ' + jQuery('#SendMessage').val()));
-						jQuery('#SendMessage').val('');
-
-						iosocket.get('nickname', function (err, name) {
-							alert(name);
-						});
-					}
+					jQuery('#SendMessage').keypress(function(event) {
+						if(event.which == 13) {
+							event.preventDefault();
+							iosocket.emit('message', jQuery('#SendMessage').val());
+							jQuery('#SendMessage').val('');
+						}
+					});
 				});
 			}
 		});
