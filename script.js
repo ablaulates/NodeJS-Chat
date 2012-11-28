@@ -37,6 +37,7 @@ var chat = {
 
 		chat.iosocket.on('message', function(msg) {
 			jQuery('#ChatMessages').append(jQuery('<li></li>').text(msg.sender_name + " diz: " + msg.message));
+			jQuery("#ChatMessages").scrollTop(jQuery("#ChatMessages")[0].scrollHeight);
 		});
 
 		chat.iosocket.on('disconnect', function() {
@@ -57,7 +58,7 @@ var chat = {
 		});
 	},
 	showChat: function(name,room){
-		var chatWindow = "<div id='chat'><ul id='ChatMessages'></ul><input type='text' id='SendMessage' placeholder='enviar' /></div>";
+		var chatWindow = "<div id='chat'><ul id='ChatMessages'></ul><input type='text' id='SendMessage' placeholder='enviar' /></div><aside><ul id='userList'><li>Pessoas online</li></ul></aside>";
 		jQuery("#wrapper.home").html("").removeClass('home');
 		jQuery("#wrapper").append(chatWindow).addClass('chat');
 		chat.startChat(name, room);

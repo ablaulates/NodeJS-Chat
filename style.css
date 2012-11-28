@@ -21,6 +21,13 @@ body {
 	border-radius: 5px;
 }
 
+#wrapper.chat {
+	width: 600px;
+	height: 100%;
+	margin: 0 auto;
+}
+
+
 #wrapper.home h1 {
 	font-weight: 100;
 	line-height: 70px;
@@ -80,16 +87,21 @@ body {
 
 #chat {
 	width: 400px;
-	margin: 0 auto;
+	height: 450px;
+	float: left;
 	background-color: #ccc;	
 	font-size: 14px;
+	position: absolute;
+	bottom: 0px;
 }
 
-#chat ul {
+#chat #ChatMessages {
 	list-style: none;
+	height: 400px;
+	overflow-y: scroll;
 }
 
-#chat li {
+#chat #ChatMessages li {
 	padding: 10px;
 	background-color: #ddd;
 	margin: 1px;
@@ -101,4 +113,15 @@ body {
 	padding: 0 10px;
 	border: 1px solid #aaa;
 	margin: 10px;
+}
+
+aside {
+	width: 180px;
+	float: right;
+}
+
+aside ul {
+	list-style: none;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }

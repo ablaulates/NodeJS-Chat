@@ -5,7 +5,7 @@ var room = {},
 	io = require('socket.io').listen(4000);
 
 io.sockets.on('connection', function (socket) {
-	var t;
+	var thisUser;
 
 	socket.on('setRoom', function (pass) {
 		room[pass] = 0;
@@ -33,19 +33,12 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('disconnect', function () {
-			var thisUser = t;
-
-			console.log(users);
-			console.log(room);
-
+		if(thisUser != undefined){
 			delete users[thisUser.id];
 			room[thisUser.room] = room[thisUser.room] - 1;
 			if(room[thisUser.room] == 0){
 				delete room[thisUser.room];
 			}
-
-			console.log(users);
-			console.log(room);
-
+		}
 	});
 });
