@@ -12,23 +12,69 @@ body {
 	display: none;
 }
 
-.loginbox {
-	width: 200px;
-	height: 35px;
-	margin: 30px auto;
-	padding: 20px;
-	background-color: #ccc;
+#wrapper.home {
+	width: 700px;
+	height: 230px;
+	margin: 100px auto 0;
+	background-color: #f1f1f1;
+	border: 1px solid #ccc;
 	border-radius: 5px;
 }
 
-.loginbox input {
+#wrapper.home h1 {
+	font-weight: 100;
+	line-height: 70px;
+	text-align: center;
+}
+
+#wrapper.home h2 {
+	font-weight: 100;
+	margin-bottom: 10px;
+}
+
+#wrapper.home .room-box,
+#wrapper.home .login-box {
+	width: 280px;
+	height: 110px;
+	padding: 15px;
+	background-color: #dedede;
+	border: 1px solid #aaa;
+	border-radius: 5px;
+}
+
+#wrapper.home .room-box {
+	float: left;
+	margin-left: 30px;
+}
+
+#wrapper.home .room-box .password-room {
+	width: 260px;
+	padding: 10px;
+	border-radius: 5px;
+	cursor: pointer;
+	text-align: center;
+	border: 1px solid #aaa;
+	background-color: #ccc;
+}
+
+#wrapper.home .room-box .password-room.generated {
+	background-color: #cfc;
+}
+
+#wrapper.home .login-box {
+	float: right;
+	margin-right: 30px;
+}
+
+#wrapper.home .login-box input {
 	height: 30px;
-	width: 200px;
+	width: 280px;
 	padding: 0 10px;
+	margin: 5px 0;
 	border: 1px solid #aaa;
 }
 
-.loginbox #submit {
+.login-box #submit {
 	display: none;
 }
 
