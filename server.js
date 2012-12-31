@@ -1,6 +1,5 @@
 var room = {},
 	users = {},
-	fs = require('fs'),
 	uuid = require('uuid-v4'),
 	io = require('socket.io').listen(4000);
 

@@ -1,8 +1,8 @@
-var chat = {
+var Chat = {
 	iosocket: io.connect(":4000"),
 	startConnection: function(){
-		chat.iosocket.on('connect', function () {
-	 		chat.setupHome();
+		Chat.iosocket.on('connect', function () {
+	 		Chat.setupHome();
 		});
 	},
 	setupHome: function(){
@@ -10,7 +10,7 @@ var chat = {
 			e.preventDefault();
 			var name = jQuery('#login').val();
 			var room = jQuery('#room').val();
-			chat.showChat(name,room);
+			Chat.showChat(name,room);
 		});
 
 		jQuery('.room-box').on('click', '.password-room', function(e){
@@ -18,7 +18,7 @@ var chat = {
 			if(!jQuery(this).hasClass('generated')){
 				var pass = Math.round(Math.random()*100000);
 				jQuery(this).html(pass).addClass('generated');
-				chat.iosocket.emit('setRoom', pass);
+				Chat.iosocket.emit('setRoom', pass);
 			}
 		});
 	},
@@ -28,20 +28,21 @@ var chat = {
 			room: room
 		};
 		
-		chat.iosocket.emit('setUser', user);
-		chat.iosocket.on('error', function(msg){
-			alert(msg);
+		Chat.iosocket.emit('setUser', user);
+		Chat.iosocket.on('error', function(msg){
+			console.log(msg);
 			jQuery('body').remove();
 			return false;
 		});
 
-		chat.iosocket.on('message', function(msg) {
+		Chat.iosocket.on('message', function(msg) {
 			jQuery('#ChatMessages').append(jQuery('<li></li>').text(msg.sender_name + " diz: " + msg.message));
 			jQuery("#ChatMessages").scrollTop(jQuery("#ChatMessages")[0].scrollHeight);
 		});
 
-		chat.iosocket.on('disconnect', function() {
-			jQuery('body').remove();
+		Chat.iosocket.on('disconnect', function() {
+			console.log("Você foi desconectado!");
+			window.location.reload();
 		});
 
 		jQuery('#SendMessage').keypress(function(event) {
@@ -52,18 +53,18 @@ var chat = {
 					message: jQuery('#SendMessage').val()
 				}
 				event.preventDefault();
-				chat.iosocket.emit('message', msg);
+				Chat.iosocket.emit('message', msg);
 				jQuery('#SendMessage').val('');
 			}
 		});
 	},
 	showChat: function(name,room){
-		var chatWindow = "<div id='chat'><ul id='ChatMessages'></ul><input type='text' id='SendMessage' placeholder='enviar' /></div><aside><ul id='userList'><li>Pessoas online</li></ul></aside>";
+		var chatWindow = "<div id='chat'><ul id='ChatMessages'></ul><input type='text' id='SendMessage' placeholder='enviar' /></div><aside><div class='user-online'><span>Pessoas online</span></div><ul id='userList'><li>Comming soon!</li></ul></aside>";
 		jQuery("#wrapper.home").html("").removeClass('home');
 		jQuery("#wrapper").append(chatWindow).addClass('chat');
-		chat.startChat(name, room);
+		Chat.startChat(name, room);
 	}
 }
 jQuery(function(){
-	chat.setupHome();
+	Chat.setupHome();
 });

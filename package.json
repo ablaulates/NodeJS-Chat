@@ -1,0 +1,14 @@
+{
+  "name": "chat-node",
+  "description": "A chat for the Guiky Labs platform, built with socket.io.",
+  "version": "0.0.1",
+  "private": true,
+  "engines": [
+    "node >= 0.6.15"
+  ],
+  "main": "server.js",
+  "dependencies": {
+    "socket.io": ">= 0.9.10",
+    "uuid-v4": ">= 0.1.0"
+  }
+}
