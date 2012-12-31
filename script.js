@@ -6,11 +6,17 @@ var Chat = {
 		});
 	},
 	setupHome: function(){
-		jQuery("#formlogin").on('submit', function(e){
-			e.preventDefault();
-			var name = jQuery('#login').val();
-			var room = jQuery('#room').val();
-			Chat.showChat(name,room);
+		jQuery('#formlogin input').keypress(function(event) {
+			if(event.which == 13) {
+				var name = jQuery('#login').val();
+				var room = jQuery('#room').val();
+
+				if(name != "" && room != ""){				
+					Chat.showChat(name,room);
+				} else {
+					alert('Preencha todos os campos');
+				}
+			}
 		});
 
 		jQuery('.room-box').on('click', '.password-room', function(e){
@@ -31,7 +37,8 @@ var Chat = {
 		Chat.iosocket.emit('setUser', user);
 		Chat.iosocket.on('error', function(msg){
 			console.log(msg);
-			jQuery('body').remove();
+			alert("error!");
+			window.location.reload();
 			return false;
 		});
 

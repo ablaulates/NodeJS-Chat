@@ -1,10 +1,5 @@
 #NodeJS Chat
 
-Chat feito em NodeJS e Socket.io, é um exemplo bem simples que permite conversar em tempo real com as pessoas da mesma rede.
-Para rodar esse chat, é preciso instalar Node.JS, Socket.io
+Exemplo bem simples de um chat feito em NodeJS. Neste exemplo temos um webchat onde é possivel criar salas de bate-papo com vários usuários e trocar mensagem em tempo real utilizando Web Sockets.
 
-Instalando NodeJS
-http://nodejs.org/
-
-Instalando Socket.io 
-$ npm install socket.io
+Você pode ver o exemplo funcionando em: chat.guikylabs.com

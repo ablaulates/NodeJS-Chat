@@ -83,10 +83,6 @@ html, body {
 	box-shadow: 2px 2px 1px 0.1px #ccc inset;
 }
 
-.login-box #submit {
-	display: none;
-}
-
 #wrapper.chat {
 	top: 50%;
 	left: 50%;
